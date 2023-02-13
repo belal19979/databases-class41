@@ -24,7 +24,7 @@ connection.connect((err) => {
       `,
       (err, result) => {
         if (err) throw err;
-        console.log(result);
+        console.table(result);
       },
     );
 
@@ -40,7 +40,7 @@ connection.connect((err) => {
       `,
       (err, result) => {
         if (err) throw err;
-        console.log(result);
+        console.table(result);
       },
     );
 
@@ -53,22 +53,25 @@ connection.connect((err) => {
       `,
       (err, result) => {
         if (err) throw err;
-        console.log(result);
+        console.table(result);
       },
     );
 
     //Sum of the research papers of the authors per university.
     connection.query(
       `
-      SELECT university, COUNT(authorsPaper.paper_id) AS sum_of_research_papers 
-      FROM authors 
-      INNER JOIN authorsPaper 
-      ON authors.author_id = authorsPaper.author_id
-      GROUP BY university;
-      `,
+      SELECT COUNT(*) AS research_papers, university
+      FROM research_papers 
+      LEFT JOIN authorsPaper 
+      ON research_papers.paper_id = authorsPaper.paper_id
+      LEFT JOIN authors 
+      ON authorsPaper.author_id = authors.author_id
+      GROUP BY university 
+  
+  `,
       (err, result) => {
         if (err) throw err;
-        console.log(result);
+        console.table(result);
       },
     );
 
@@ -81,7 +84,7 @@ connection.connect((err) => {
       `,
       (err, result) => {
         if (err) throw err;
-        console.log(result);
+        console.table(result);
       },
     );
   }

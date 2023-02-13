@@ -19,27 +19,25 @@ connection.connect((err) => {
       authors.author_name AS 'Author Name',
       mentors.author_name AS 'Mentor Name'
       FROM authors
-      JOIN authors mentors
+      JOIN authors AS mentors
       ON authors.mentor = mentors.author_id;
       `,
       (err, result) => {
         if (err) throw err;
-        console.log(result);
+        console.table(result);
       },
     );
 
     connection.query(
-      `
-      SELECT authors.*, research_papers.paper_title 
-      FROM authors 
-      LEFT JOIN authorsPaper 
-      ON authorsPaper.author_id = authors.author_id 
-      LEFT JOIN research_papers 
-      ON authorsPaper.paper_id = research_papers.paper_id;
-      `,
+      `SELECT authors.*,paper_title 
+      FROM authors
+      LEFT JOIN authorsPaper
+      ON  authorsPaper.author_id = authors.author_id 
+      LEFT JOIN research_papers
+      ON authorsPaper.paper_id = research_papers.paper_id`,
       (err, result) => {
         if (err) throw err;
-        console.log(result);
+        console.table(result);
       },
     );
   }
