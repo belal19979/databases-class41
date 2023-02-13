@@ -8,15 +8,16 @@ const connection = mysql.createConnection({
 });
 
 
-conn.connect((err) => {
+connection.connect((err) => {
   if (err) {
     throw err;
   }
   console.log('Database connected..');
 });
 
+//Re-writing the function
 function getPopulation(Country, name, code, cb) {
-  conn.query(
+  connection.query(
     `SELECT Population FROM ? WHERE Name = ? and code = ?`,
     [Country, name, code],
     function (err, result) {
